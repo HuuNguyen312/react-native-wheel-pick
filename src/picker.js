@@ -36,9 +36,32 @@ export default class Picker extends Component {
     selectedValue: '',
   };
 
+
   state = {
-    selectedValue: this.props.selectedValue,
+    selectedValue: null,
   };
+
+  componentDidMount() {
+    this.setState({
+      selectedValue: null
+    }, () => {
+     setTimeout(() => {
+      this.setState({
+        selectedValue: this.props?.selectedValue
+      })
+     }, 0)
+    })
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.selectedValue !== nextProps?.selectedValue) {
+      setTimeout(() => {
+        this.setState({
+          selectedValue: nextProps?.selectedValue
+        })
+      }, 200)
+    }
+  }
 
   handleChange = (selectedValue) => {
     this.setState({ selectedValue });
